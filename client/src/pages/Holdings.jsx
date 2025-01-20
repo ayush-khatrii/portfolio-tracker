@@ -1,4 +1,5 @@
 import { MdAdd } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 export default function Holdings() {
   const holdings = [
@@ -26,9 +27,12 @@ export default function Holdings() {
     <section className="container mx-auto">
       <div className="flex justify-between my-5 items-center w-full">
         <h1 className="md:text-2xl text-lg font-bold md:mb-0">All Your Holdings</h1>
-        <button className="inline-flex justify-center items-center text-sm px-3 py-2 bg-emerald-950 rounded-md w-auto text-center text-white hover:bg-emerald-800 transition duration-300">
-          <MdAdd className="mr-1" /> Add Stock
-        </button>
+        <Link to="/add/holding" className="flex items-center">
+          <button
+            className="inline-flex justify-center items-center text-sm px-3 py-2 bg-emerald-950 rounded-md w-auto text-center text-white hover:bg-emerald-800 transition duration-300">
+            <MdAdd className="mr-1" /> Add Stock
+          </button>
+        </Link>
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full">

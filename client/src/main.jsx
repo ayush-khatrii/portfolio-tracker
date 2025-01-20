@@ -8,6 +8,7 @@ import ErrorPage from './pages/ErrorPage.jsx';
 import Layout from "./layout.jsx";
 import { RouterProvider } from "react-router-dom";
 import Search from "./pages/Search.jsx";
+import AddStock from "./pages/AddStock.jsx";
 
 const router = createBrowserRouter([
   {
@@ -24,9 +25,13 @@ const router = createBrowserRouter([
         element: <Holdings />,
       },
       {
+        path: "/add/holding",
+        element: <AddStock />,
+      },
+      {
         path: "/search",
         element: <Search />,
-      }
+      },
     ]
   },
 ]);
