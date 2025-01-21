@@ -5,7 +5,6 @@ import App from './App.jsx'
 import { BrowserRouter, Routes, Route, createBrowserRouter } from "react-router";
 import Holdings from './pages/Holdings.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
-import Layout from "./layout.jsx";
 import { RouterProvider } from "react-router-dom";
 import Search from "./pages/Search.jsx";
 import AddStock from "./pages/AddStock.jsx";
@@ -13,7 +12,6 @@ import AddStock from "./pages/AddStock.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
     errorElement: <ErrorPage />,
     children: [
       {

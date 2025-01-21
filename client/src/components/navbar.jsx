@@ -64,7 +64,7 @@ export default function Navbar() {
               Holdings
             </NavLink>
             <NavLink to="/search"
-              className={`hover:text-emerald-500 transition-all duration-150 ${url === "/search" ? "opacity-100" : "opacity-50"}`}
+              className={`hover:text-emerald-500 transition-all duration-150 ${url === "/holdings" ? "opacity-100" : "opacity-50"}`}
             >
               Search
             </NavLink>
