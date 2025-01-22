@@ -28,7 +28,7 @@ const getHoldingById = async (req, res) => {
 
 const addHolding = async (req, res) => {
   try {
-    const { name, ticker, price, quantity, currentPrice } = req.body;
+    const { name, ticker, price, quantity } = req.body;
 
     const existingStock = await prisma.stock.findUnique({
       where: {
@@ -46,7 +46,6 @@ const addHolding = async (req, res) => {
         symbol: ticker,
         purchasePrice: price,
         quantity: quantity,
-        currentPrice: currentPrice,
       }
     });
 
