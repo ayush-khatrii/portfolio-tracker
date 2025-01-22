@@ -28,19 +28,33 @@ const getHoldingById = async (req, res) => {
 
 const addHolding = async (req, res) => {
   try {
-    const { name, ticker, price, quantity } = req.body;
+    const { name, ticker, price, quantity, currentPrice } = req.body;
+
+    const existingStock = await prisma.stock.findUnique({
+      where: {
+        symbol: ticker
+      },
+    });
+
+    if (existingStock) {
+      return res.status(400).json({ message: 'Stock already exists in portfolio!' });
+    }
+
     const newHolding = await prisma.stock.create({
       data: {
         name: name,
         symbol: ticker,
         purchasePrice: price,
-        quantity: quantity
+        quantity: quantity,
+        currentPrice: currentPrice,
       }
     });
+
+
     res.status(201).json({ message: "Successfully added!", data: newHolding });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "An error occurred" });
+    return res.status(500).json({ message: 'An error occurred while adding the stock.' });
   }
 };
 
@@ -83,7 +97,7 @@ const deleteHolding = async (req, res) => {
   }
 }
 
-export {
+export default {
   getAllHoldings,
   getHoldingById,
   addHolding,
