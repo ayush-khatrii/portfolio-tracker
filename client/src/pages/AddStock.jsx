@@ -15,7 +15,7 @@ export default function AddStock() {
   const fetchShareDetails = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(`https://financialmodelingprep.com/api/v3/quote-order/${symbol.toUpperCase()}?apikey=${apiKey}`);
+      const res = await fetch(`https://financialmodelingprep.com/api/v3/quote/${symbol.toUpperCase()}?apikey=${apiKey}`);
       const data = await res.json();
       console.log(data);
       setShare(data[0]);
