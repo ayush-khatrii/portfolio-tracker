@@ -23,19 +23,31 @@ export default function TopPerformingStocks() {
     stocks();
   }, []);
 
+  // const sampleData = [
+  //   {
+  //     "symbol": "MSFT",
+  //     "price": 446.71,
+  //   },
+  //   {
+  //     "symbol": "AAPL",
+  //     "price": 223.66,
+  //   },
+  //   {
+  //     "symbol": "GOOGL",
+  //     "price": 197.98,
+  //   }
+  // ];
 
   return (
-    <section className="w-full h-full  border border-zinc-500/15 cursor-pointer rounded">
+    <section className="w-full border border-zinc-500/15 cursor-pointer rounded">
       <div className="flex justify-between px-6 py-4">
         <h2 className="text-lg font-bold">Top Performing Stocks</h2>
         <CiTrophy className=" h-5 w-5" />
       </div>
-      <div className="h-[300px] md:h-[400px] w-full">
+      <div className="h-[300px] md:h-[300px] w-full">
         <ResponsiveContainer>
           <BarChart data={stockData} margin={{ top: 20, right: 20, bottom: 20, left: 0 }}>
-            {/* X and Y Axes */}
             <XAxis dataKey="symbol" tickLine={false} axisLine={false} />
-            {/* <YAxis /> */}
             <Tooltip
               contentStyle={{
                 backgroundColor: "#000",

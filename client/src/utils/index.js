@@ -19,7 +19,6 @@ export const getRealTimePrices = async (stocks) => {
   }
 };
 
-
 export const portfolioMetrics = async (stocks) => {
   const stocksWithRealTimePrices = await getRealTimePrices(stocks);
 
@@ -78,3 +77,38 @@ export const getTopPerformingStocks = async (stocks) => {
 
 }
 
+export const fetchSector = async (stocks) => {
+  try {
+    const symbols = stocks.map((stock) => stock.symbol).join(",");
+    const res = await fetch(`https://financialmodelingprep.com/api/v3/profile/${symbols}?apikey=${apikey}`);
+
+    const data = await res.json();
+
+    const stocksWithSector = data.map(stock => ({
+      symbol: stock.symbol,
+      sector: stock.sector
+    }));
+
+    const sectorCount = {};
+    for (let i = 0; i < stocksWithSector.length; i++) {
+      const sector = stocksWithSector[i].sector;
+
+      if (sectorCount[sector]) {
+        sectorCount[sector] += 1;
+      } else {
+        sectorCount[sector] = 1;
+      }
+    };
+
+    const finalData = Object.keys(sectorCount).map((sector) => {
+      return {
+        sector,
+        count: sectorCount[sector]
+      }
+    });
+
+    return finalData;
+  } catch (error) {
+    console.log(error)
+  }
+}

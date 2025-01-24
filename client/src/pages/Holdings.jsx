@@ -1,38 +1,34 @@
 import { MdAdd } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Navbar from "../components/navbar";
+import { useEffect, useState } from "react";
 
+const backendUrl = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 export default function Holdings() {
-  const holdings = [
-    // {
-    //   symbol: "AAPL",
-    //   quantity: 10,
-    //   avgPrice: 150.00,
-    //   ltp: 150.00,
-    //   currentValue: 150.00,
-    //   overallPL: 150.00,
-    //   overallPercentage: 1500.00
-    // },
-    // {
-    //   symbol: "GOOGL",
-    //   quantity: 5,
-    //   avgPrice: 2800.00,
-    //   ltp: 2800.00,
-    //   currentValue: 2800.00,
-    //   overallPL: 2800.00,
-    //   overallPercentage: 14000.00
-    // }
-  ];
+  const [stocks, setStocks] = useState([]);
 
+  const holdings = async () => {
+    try {
+      const resp = await fetch(`${backendUrl}/api/holding/all`);
+      const allHoldings = await resp.json();
+      console.log("you holding...", allHoldings);
+      setStocks(allHoldings.data);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+  useEffect(() => {
+    holdings();
+  }, []);
   return (
     <>
       <Navbar />
-      <section className="container mx-auto px-4">
+      <section className="container mx-auto px-3">
         <div className="flex justify-between my-5 items-center w-full">
-          <h1 className="md:text-2xl text-lg font-bold md:mb-0">All Your Holdings</h1>
+          <h1 className="md:text-xl text-lg font-bold md:mb-0 px-3">All Your Holdings</h1>
           <Link to="/add/holding" className="flex items-center">
             <button
-              className="inline-flex justify-center items-center text-sm px-3 py-2 bg-green-950 rounded-md w-auto text-center text-white hover:bg-green-800 transition duration-300">
+              className="inline-flex justify-center items-center text-sm px-3 py-2 bg-emerald-950 rounded-md w-auto text-center text-white hover:bg-emerald-800 transition duration-300">
               <MdAdd className="mr-1" /> Add Stock
             </button>
           </Link>
@@ -44,25 +40,19 @@ export default function Holdings() {
                 <th className="py-2 font-extrabold px-4 text-left leading-tight">Stock</th>
                 <th className="py-2 font-extrabold px-4 text-left leading-tight">Quantity</th>
                 <th className="py-2 font-extrabold px-4 text-left leading-tight">Avg. Price</th>
-                <th className="py-2 font-extrabold px-4 text-left leading-tight">LTP</th>
-                <th className="py-2 font-extrabold px-4 text-left leading-tight">Current Value</th>
-                <th className="py-2 font-extrabold px-4 text-left leading-tight">Overall P&L</th>
-                <th className="py-2 font-extrabold px-4 text-left leading-tight">Overall %</th>
+                <th className="py-2 font-extrabold px-4 text-left leading-tight">Current Price</th>
                 <th className="py-2 font-extrabold px-4 text-left leading-tight">Actions</th>
               </tr>
             </thead>
             <tbody>
 
               {
-                holdings.map((holding, index) => (
+                stocks.map((holding, index) => (
                   <tr key={index} className="border-b border-zinc-900">
                     <td className="py-2 text-sm px-4">{holding.symbol}</td>
                     <td className="py-2 text-sm px-4">{holding.quantity}</td>
-                    <td className="py-2 text-sm px-4">${holding.avgPrice.toFixed(2)}</td>
-                    <td className="py-2 text-sm px-4">${holding.ltp.toFixed(2)}</td>
-                    <td className="py-2 text-sm px-4">${holding.currentValue.toFixed(2)}</td>
-                    <td className="py-2 text-sm px-4">${holding.overallPL.toFixed(2)}</td>
-                    <td className="py-2 text-sm px-4">${holding.overallPercentage.toFixed(2)}</td>
+                    <td className="py-2 text-sm px-4">${holding.purchasePrice}</td>
+                    <td className="py-2 text-sm px-4">${holding.purchasePrice}</td>
                     <td className="py-2 text-sm px-4">
                       <button className="bg-blue-900 rounded-md px-3 py-1 mr-2 transition duration-300">Edit</button>
                       <button className="bg-red-900 rounded-md px-3 py-1 mr-2 transition duration-300">Delete</button>
@@ -71,7 +61,7 @@ export default function Holdings() {
                 ))}
             </tbody>
           </table>
-          {holdings.length < 1 &&
+          {stocks.length === 0 &&
             <p className=" text-center my-10">No holdings found!</p>
           }
         </div>
