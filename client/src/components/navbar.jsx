@@ -12,7 +12,7 @@ export default function Navbar() {
       <div className="container mx-auto p-4">
         <div className="flex justify-between items-center">
           <NavLink to="/" className="flex items-center">
-            <div className="ml-3 flex gap-1 justify-center items-center font-extrabold text-emerald-500">
+            <div className="ml-3 flex gap-1 justify-center items-center font-extrabold text-green-500">
               <MdShowChart size="25" />
               <span className="text-lg">TrackX</span>
             </div>
@@ -28,18 +28,18 @@ export default function Navbar() {
             <nav className="flex items-center text-base space-x-4">
               <NavLink
                 to="/"
-                className={`hover:text-emerald-500 transition-all duration-150 ${url === "/" ? "opacity-100" : "opacity-50"}`}
+                className={`hover:text-green-500 transition-all duration-150 ${url === "/" ? "opacity-100" : "opacity-50"}`}
               >
                 Dashboard
               </NavLink>
               <NavLink
                 to="/holdings"
-                className={`hover:text-emerald-500 transition-all duration-150 ${url === "/holdings" ? "opacity-100" : "opacity-50"}`}
+                className={`hover:text-green-500 transition-all duration-150 ${url === "/holdings" ? "opacity-100" : "opacity-50"}`}
               >
                 Holdings
               </NavLink>
               <NavLink to="/search"
-                className={`hover:text-emerald-500 transition-all duration-150 ${url === "/search" ? "opacity-100" : "opacity-50"}`}
+                className={`hover:text-green-500 transition-all duration-150 ${url === "/search" ? "opacity-100" : "opacity-50"}`}
               >
                 Search
               </NavLink>
@@ -52,19 +52,19 @@ export default function Navbar() {
             <NavLink
               to="/"
               onClick={() => setIsMenuOpen(false)}
-              className={`hover:text-emerald-500 transition-all duration-150 ${url === "/" ? "opacity-100" : "opacity-50"}`}
+              className={`hover:text-green-500 transition-all duration-150 ${url === "/" ? "opacity-100" : "opacity-50"}`}
             >
               Dashboard
             </NavLink>
             <NavLink
               to="/holdings"
               onClick={() => setIsMenuOpen(false)}
-              className={`hover:text-emerald-500 transition-all duration-150 ${url === "/holdings" ? "opacity-100" : "opacity-50"}`}
+              className={`hover:text-green-500 transition-all duration-150 ${url === "/holdings" ? "opacity-100" : "opacity-50"}`}
             >
               Holdings
             </NavLink>
             <NavLink to="/search"
-              className={`hover:text-emerald-500 transition-all duration-150 ${url === "/holdings" ? "opacity-100" : "opacity-50"}`}
+              className={`hover:text-green-500 transition-all duration-150 ${url === "/holdings" ? "opacity-100" : "opacity-50"}`}
             >
               Search
             </NavLink>

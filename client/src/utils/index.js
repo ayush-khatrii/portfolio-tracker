@@ -2,23 +2,18 @@ const apikey = import.meta.env.VITE_REACT_APP_API_KEY;
 
 export const getRealTimePrices = async (stocks) => {
   const symbols = stocks.map((stock) => stock.symbol).join(",");
-
   try {
     const resp = await fetch(`https://financialmodelingprep.com/api/v3/quote/${symbols}?apikey=${apikey}`);
     if (!resp.ok) {
       throw new Error("Failed to fetch real-time prices");
     }
     const allPrices = await resp.json();
-    console.log('allPrices', allPrices);
-
     const stockData = allPrices.map(stock => ({
       symbol: stock.symbol,
       price: stock.price
     }));
 
-    console.log('REAL_TIME_stockData', stockData);
     return stockData;
-
   } catch (error) {
     console.error(error.message);
   }
@@ -58,5 +53,28 @@ export const portfolioMetrics = async (stocks) => {
     totalPL,
     totalPLPercentage
   }
+};
+
+export const getTopPerformingStocks = async (stocks) => {
+  const symbols = stocks.map((stock) => stock.symbol).join(",");
+  try {
+    const resp = await fetch(`https://financialmodelingprep.com/api/v3/quote/${symbols}?apikey=${apikey}`);
+    if (!resp.ok) {
+      throw new Error("Failed to fetch real-time prices");
+    }
+    const allPortfolioStocks = await resp.json();
+
+    const realTimeStockData = allPortfolioStocks.map(stock => ({
+      symbol: stock.symbol,
+      price: stock.price
+    }));
+
+    const sortedStocks = realTimeStockData.sort((a, b) => b.price - a.price);
+    return sortedStocks;
+  } catch (error) {
+    console.error(error.message);
+  }
+
+
 }
 

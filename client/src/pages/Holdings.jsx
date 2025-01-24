@@ -32,7 +32,7 @@ export default function Holdings() {
           <h1 className="md:text-2xl text-lg font-bold md:mb-0">All Your Holdings</h1>
           <Link to="/add/holding" className="flex items-center">
             <button
-              className="inline-flex justify-center items-center text-sm px-3 py-2 bg-emerald-950 rounded-md w-auto text-center text-white hover:bg-emerald-800 transition duration-300">
+              className="inline-flex justify-center items-center text-sm px-3 py-2 bg-green-950 rounded-md w-auto text-center text-white hover:bg-green-800 transition duration-300">
               <MdAdd className="mr-1" /> Add Stock
             </button>
           </Link>

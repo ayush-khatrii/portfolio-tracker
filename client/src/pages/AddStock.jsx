@@ -68,16 +68,16 @@ export default function AddStock() {
 
       <div className='max-w-5xl mx-auto'>
         {isLoading &&
-          <div className='bg-teal-950/15 p-5 flex justify-between items-center rounded-md animate-pulse'>
-            <div className='w-1/4 h-8 bg-teal-900/50 rounded-md'></div>
-            <div className='w-1/4 h-8 bg-teal-900/50 rounded-md'></div>
+          <div className='bg-green-950/15 p-5 flex justify-between items-center rounded-md animate-pulse'>
+            <div className='w-1/4 h-8 bg-green-900/50 rounded-md'></div>
+            <div className='w-1/4 h-8 bg-green-900/50 rounded-md'></div>
           </div>
         }
         {
           share &&
-          <div className='bg-teal-950/15 p-5 flex justify-between items-center rounded-md'>
+          <div className='bg-green-950/15 p-5 flex justify-between items-center rounded-md'>
             <div>
-              <span className='text-teal-500'>
+              <span className='text-green-500'>
                 {share.symbol}
               </span>
               <h1 className='font-bold text-2xl'>
@@ -113,13 +113,13 @@ export default function AddStock() {
             <button
               type="submit"
               disabled={isLoading || !symbol}
-              className={`${!symbol ? "bg-zinc-700 cursor-not-allowed" : "bg-teal-950"} px-3 py-2 rounded-md`}>Search</button>
+              className={`${!symbol ? "bg-zinc-700 cursor-not-allowed" : "bg-green-950"} px-3 py-2 rounded-md`}>Search</button>
           </div>
           <button
             type="submit"
             disabled={isAddingStock || !share}
             onClick={addStockToPortfolio}
-            className={`${!share ? "bg-zinc-900 border border-zinc-800 cursor-not-allowed" : "bg-teal-950"}  flex justify-center items-center gap-2  text-base font-bold px-3 py-2 rounded-md w-full`}>
+            className={`${!share ? "bg-zinc-900 border border-zinc-800 cursor-not-allowed" : "bg-green-950"}  flex justify-center items-center gap-2  text-base font-bold px-3 py-2 rounded-md w-full`}>
             {isAddingStock && <AiOutlineLoading3Quarters className="animate-spin" />} Add to Portfolio
           </button>
 
