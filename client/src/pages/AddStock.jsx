@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+
 
 export default function AddStock() {
   const [symbol, setSymbol] = useState('');
@@ -9,6 +10,7 @@ export default function AddStock() {
   const [isLoading, setIsLoading] = useState(false);
   const [isAddingStock, setIsAddingStock] = useState(false);
 
+  const navigate = useNavigate();
   const apiKey = import.meta.env.VITE_REACT_APP_API_KEY;
   const url = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 
@@ -17,7 +19,6 @@ export default function AddStock() {
     try {
       const res = await fetch(`https://financialmodelingprep.com/api/v3/quote/${symbol.toUpperCase()}?apikey=${apiKey}`);
       const data = await res.json();
-      console.log(data);
       setShare(data[0]);
     } catch (error) {
       console.log(error);
@@ -45,6 +46,10 @@ export default function AddStock() {
         })
       });
       const data = await res.json();
+      if (res.ok) {
+        navigate("/")
+      }
+
       if (!res.ok) {
         return alert(data.message);
       }
@@ -122,7 +127,6 @@ export default function AddStock() {
             className={`${!share ? "bg-zinc-900 border border-zinc-800 cursor-not-allowed" : "bg-green-950"}  flex justify-center items-center gap-2  text-base font-bold px-3 py-2 rounded-md w-full`}>
             {isAddingStock && <AiOutlineLoading3Quarters className="animate-spin" />} Add to Portfolio
           </button>
-
         </form>
       </div >
     </section >
