@@ -61,10 +61,34 @@ const updateHolding = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, ticker, price, quantity } = req.body;
+
+    const currentHolding = await prisma.stock.findUnique({
+      where: { id }
+    });
+    const existingStock = await prisma.stock.findUnique({
+      where: { symbol: ticker }
+    });
+
+    if (existingStock && existingStock.id !== currentHolding.id) {
+      const mergedStock = await prisma.stock.update({
+        where: { id: existingStock.id },
+        data: {
+          quantity: existingStock.quantity + quantity,
+          purchasePrice: price
+        }
+      });
+
+      await prisma.stock.delete({
+        where: { id: currentHolding.id }
+      });
+
+      return res.status(200).json({
+        message: "Holding Updated successfully!",
+        data: mergedStock
+      });
+    }
     const updatedHolding = await prisma.stock.update({
-      where: {
-        id
-      },
+      where: { id },
       data: {
         name: name,
         symbol: ticker,
@@ -72,11 +96,14 @@ const updateHolding = async (req, res) => {
         quantity: quantity
       }
     });
-    res.status(200).json({ message: "Successfully updated!", data: updatedHolding });
+    res.status(200).json({
+      message: "Holding updated successfully!",
+      data: updatedHolding
+    });
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "An error occurred" });
+    res.status(500).json({ message: error.message });
   }
 };
 
