@@ -8,6 +8,10 @@ import ErrorPage from './pages/ErrorPage.jsx';
 import { RouterProvider } from "react-router-dom";
 import Search from "./pages/Search.jsx";
 import AddStock from "./pages/AddStock.jsx";
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
 
 const router = createBrowserRouter([
   {
@@ -33,6 +37,10 @@ const router = createBrowserRouter([
     ]
   },
 ]);
+const queryClient = new QueryClient()
+
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router} />
+  <QueryClientProvider client={queryClient}>
+    <RouterProvider router={router} />
+  </QueryClientProvider>
 )

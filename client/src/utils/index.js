@@ -32,19 +32,15 @@ export const portfolioMetrics = async (stocks) => {
 
   // Get total value of all stocks
   const totalInvestedValue = dbStocks.reduce((prev, current) => prev + Number(current.price), 0);
-  console.log('totalInvestedValue', totalInvestedValue);
 
   // Get total value of all stocks
   const totalCurrentValue = stocksWithRealTimePrices.reduce((prev, current) => prev + Number(current.price), 0);
-  console.log('totalCurrentValue', totalCurrentValue);
 
   // Get p&l value
   const totalPL = totalCurrentValue - totalInvestedValue;
-  console.log('totalPL', totalPL);
 
   // Get p&l percentage
   const totalPLPercentage = ((totalPL / totalInvestedValue) * 100).toFixed(2);
-  console.log('totalPLPercentage', totalPLPercentage);
 
   return {
     totalInvestedValue,
