@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { IoIosArrowRoundBack } from 'react-icons/io';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 
 const url = import.meta.env.VITE_REACT_APP_BACKEND_URL;
@@ -64,7 +65,7 @@ export default function EditHolding() {
       }
 
       if (!res.ok) {
-        return alert(data.message);
+        return toast(data.message);
       }
     } catch (error) {
       console.log(error);
@@ -74,6 +75,11 @@ export default function EditHolding() {
   };
   return (
     <section className='max-w-7xl mx-auto'>
+      <Link to={"/"}>
+        <button className='absolute top-3 md:left-10 hover:underline flex items-center gap-2 hover:border hover:border-zinc-900 px-3 py-2 rounded-md'>
+          <IoIosArrowRoundBack /> back
+        </button>
+      </Link>
       <div className="w-full p-4">
         <form onSubmit={handleEditHolding} className="w-full my-10 mx-auto">
           <h2 className="text-2xl text-center font-bold mb-4">Edit Holding</h2>

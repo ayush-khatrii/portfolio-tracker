@@ -2,6 +2,7 @@ import { useState } from "react";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import toast from "react-hot-toast";
 
 
 export default function AddStock() {
@@ -9,6 +10,12 @@ export default function AddStock() {
   const [share, setShare] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isAddingStock, setIsAddingStock] = useState(false);
+  const [holding, setHolding] = useState({
+    name: '',
+    symbol: '',
+    quantity: 1,
+    price: 1
+  });
 
   const navigate = useNavigate();
   const apiKey = import.meta.env.VITE_REACT_APP_API_KEY;
@@ -28,7 +35,7 @@ export default function AddStock() {
   };
 
   const addStockToPortfolio = async () => {
-    if (!share) return alert('Please search for a stock first');
+    if (!share) return toast('Please search for a stock first');
 
     setIsAddingStock(true);
     try {
@@ -38,11 +45,10 @@ export default function AddStock() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          name: share.name,
+          name: holding.name,
           ticker: share.symbol,
-          price: share.price,
-          quantity: 1,
-          currentPrice: share.price
+          price: holding.price,
+          quantity: holding.quantity,
         })
       });
       const data = await res.json();
@@ -51,20 +57,27 @@ export default function AddStock() {
       }
 
       if (!res.ok) {
-        return alert(data.message);
+        return toast(data.message);
       }
       console.log(data);
     } catch (error) {
       console.log(error);
-      alert('Something went wrong!');
+      toast.error(error.message);
     } finally {
       setIsAddingStock(false);
     }
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setHolding(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   return (
     <section className='min-h-screen my-20 px-3'>
-
       <Link to={"/"}>
         <button className='absolute top-3 md:left-10 hover:underline flex items-center gap-2 hover:border hover:border-zinc-900 px-3 py-2 rounded-md'>
           <IoIosArrowRoundBack /> back
@@ -103,30 +116,69 @@ export default function AddStock() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            fetchShareDetails();
+            addStockToPortfolio();
           }}
         >
-          <div className='w-full flex gap-4 my-5'>
-            <input
-              placeholder='Search for a stock (e.g. AAPL)'
-              type="text"
-              required
-              value={symbol}
-              onChange={(e) => setSymbol(e.target.value)}
-              className='w-full rounded-md px-3 py-2 bg-transparent border border-zinc-800'
-            />
+          <div className='w-full flex flex-col gap-4 my-5'>
+            <div className="">
+              <label className="block mb-2">Stock Name</label>
+              <input
+                type="text"
+                name="name"
+                required
+                placeholder="Enter stock name (e.g. Apple Inc.) "
+                value={holding.name}
+                onChange={handleInputChange}
+                className='w-full rounded-md px-3 py-2 bg-transparent border border-zinc-800'
+              />
+            </div>
+            <div className="">
+              <label className="block mb-2">Quantity</label>
+              <input
+                type="number"
+                min={1}
+                name="quantity"
+                required
+                value={holding.quantity}
+                onChange={handleInputChange}
+                className='w-full rounded-md px-3 py-2 bg-transparent border border-zinc-800'
+              />
+            </div>
+            <div className=" flex flex-col ">
+              <label className="block mb-2">Purchase Price</label>
+              <input
+                type="number"
+                min={1}
+                name="price"
+                required
+                value={holding.price}
+                onChange={handleInputChange}
+                className='w-full rounded-md px-3 py-2 bg-transparent border border-zinc-800'
+              />
+            </div>
+            <div className="mt-5">
+              <label className="block mb-2">Ticker</label>
+              <input
+                placeholder='Search for a stock (e.g. AAPL)'
+                type="text"
+                required
+                value={symbol}
+                onChange={(e) => setSymbol(e.target.value)}
+                className='w-full rounded-md px-3 py-2 bg-transparent border border-zinc-800'
+              />
+            </div>
+            <button
+              onClick={() => fetchShareDetails()}
+              disabled={isLoading || !symbol}
+              className={`${!symbol ? "bg-zinc-700 cursor-not-allowed" : "bg-green-950 border border-zinc-700"} px-3 py-2 rounded-md`}>Search</button>
             <button
               type="submit"
-              disabled={isLoading || !symbol}
-              className={`${!symbol ? "bg-zinc-700 cursor-not-allowed" : "bg-green-950"} px-3 py-2 rounded-md`}>Search</button>
+              disabled={isAddingStock || !share}
+              onClick={addStockToPortfolio}
+              className={`${!share ? "bg-zinc-900 border border-zinc-800 cursor-not-allowed" : "bg-green-950"}  flex justify-center items-center gap-2  text-base font-bold px-3 py-2 rounded-md w-full`}>
+              {isAddingStock && <AiOutlineLoading3Quarters className="animate-spin" />} Add to Portfolio
+            </button>
           </div>
-          <button
-            type="submit"
-            disabled={isAddingStock || !share}
-            onClick={addStockToPortfolio}
-            className={`${!share ? "bg-zinc-900 border border-zinc-800 cursor-not-allowed" : "bg-green-950"}  flex justify-center items-center gap-2  text-base font-bold px-3 py-2 rounded-md w-full`}>
-            {isAddingStock && <AiOutlineLoading3Quarters className="animate-spin" />} Add to Portfolio
-          </button>
         </form>
       </div >
     </section >

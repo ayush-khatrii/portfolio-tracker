@@ -15,10 +15,10 @@ export default function TotalGainLoss({ value }) {
         <div className="pt-2 font-bold">
           <span className={`flex justify-start items-center gap-3 text-2xl font-bold ${value.totalPL < 1 ? "text-red-500 " : "text-green-500 "}`}>
             <div>
-              {`$${value.totalPL}`}
+              {`$${value.totalPL.toFixed(2)}`}
             </div>
             <div className="text-sm font-normal">
-              {`(${value.totalPLPercentage}%)`}
+              {`(${value.totalPLPercentage.toFixed(2)}%)`}
             </div>
           </span>
         </div>

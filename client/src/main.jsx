@@ -6,7 +6,6 @@ import { BrowserRouter, Routes, Route, createBrowserRouter } from "react-router"
 import Holdings from './pages/Holdings.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import { RouterProvider } from "react-router-dom";
-import Search from "./pages/Search.jsx";
 import AddStock from "./pages/AddStock.jsx";
 import {
   QueryClient,
@@ -35,10 +34,6 @@ const router = createBrowserRouter([
       {
         path: "/edit/holding/:id",
         element: <EditHolding />,
-      },
-      {
-        path: "/search",
-        element: <Search />,
       },
     ]
   },
