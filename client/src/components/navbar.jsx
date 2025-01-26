@@ -38,11 +38,6 @@ export default function Navbar() {
               >
                 Holdings
               </NavLink>
-              <NavLink to="/search"
-                className={`hover:text-green-500 transition-all duration-150 ${url === "/search" ? "opacity-100" : "opacity-50"}`}
-              >
-                Search
-              </NavLink>
             </nav>
           </div>
         </div>
@@ -62,11 +57,6 @@ export default function Navbar() {
               className={`hover:text-green-500 transition-all duration-150 ${url === "/holdings" ? "opacity-100" : "opacity-50"}`}
             >
               Holdings
-            </NavLink>
-            <NavLink to="/search"
-              className={`hover:text-green-500 transition-all duration-150 ${url === "/holdings" ? "opacity-100" : "opacity-50"}`}
-            >
-              Search
             </NavLink>
           </nav>
         </div>
