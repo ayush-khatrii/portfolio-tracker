@@ -12,6 +12,8 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+import { Toaster } from 'react-hot-toast';
+import EditHolding from "./pages/EditHolding.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +33,10 @@ const router = createBrowserRouter([
         element: <AddStock />,
       },
       {
+        path: "/edit/holding/:id",
+        element: <EditHolding />,
+      },
+      {
         path: "/search",
         element: <Search />,
       },
@@ -41,6 +47,7 @@ const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <QueryClientProvider client={queryClient}>
+    <Toaster />
     <RouterProvider router={router} />
   </QueryClientProvider>
 )

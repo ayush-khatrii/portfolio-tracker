@@ -20,21 +20,6 @@ export default function PortfolioDistribution() {
     }
   };
 
-  //   [
-  //     {
-  //         "symbol": "AAPL",
-  //         "sector": "Technology"
-  //     },
-  //     {
-  //         "symbol": "GOOGL",
-  //         "sector": "Communication Services"
-  //     },
-  //     {
-  //         "symbol": "MSFT",
-  //         "sector": "Technology"
-  //     }
-  // ]
-
   const allSectorColors = {
     "Basic Materials": "#FF6347",
     "Communication Services": "#32CD32",
@@ -52,13 +37,16 @@ export default function PortfolioDistribution() {
   useEffect(() => {
     getAllStocks();
   }, []);
+
   return (
     <div className="w-full h-full  border border-zinc-500/15 cursor-pointer rounded">
+      {stockSector === 0 && <p>No stocks found in the portfolio!</p>}
       <div className="flex justify-between px-6 py-4">
         <h2 className="text-lg font-bold">Portfolio Distribution</h2>
         <CiTrophy className=" h-5 w-5" />
       </div>
       <div className="h-[300px] md:h-[300px] w-full">
+        {stockSector.length === 0 && <p className="mx-6 my-2 opacity-60">No stocks found in the portfolio!</p>}
         <ResponsiveContainer width="100%" height="100%">
           <PieChart width={500} height={500}>
             <Pie
@@ -69,10 +57,10 @@ export default function PortfolioDistribution() {
               cx="50%" cy="50%"
               fill="#8884d8"
             >
-              {stockSector.map((entry, index) => (
+              {stockSector && stockSector.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
-                  fill={allSectorColors[entry.sector] || "#8884d8"} // Default color if sector is not found
+                  fill={allSectorColors[entry.sector] || "lightblue"}
                 />
               ))}
             </Pie>

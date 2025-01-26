@@ -34,23 +34,24 @@ export default function PortfolioStocks() {
 
       <div className="overflow-x-auto">
         <table className="w-full h-auto">
-          <thead>
+          <thead className="text-sm">
             <tr className="border-b border-white/10">
+              <th className="text-left py-2 px-4 text-gray-400 font-medium">Symbol</th>
               <th className="text-left py-2 px-4 text-gray-400 font-medium">Stock</th>
               <th className="text-right py-2 px-4 text-gray-400 font-medium">Qty</th>
-              <th className="text-right py-2 px-4 text-gray-400 font-medium">Avg Price Paid</th>
+              <th className="text-right py-2 px-4 text-gray-400 font-medium">Purchase Price</th>
             </tr>
           </thead>
           <tbody>
             {stocks.slice(0, 4)?.map((stock, index) => (
               <tr
                 key={index}
-                className="border-b cursor-pointer border-white/5 hover:bg-white/5 transition-colors"
+                className="border-b text-sm md:text-base cursor-pointer border-white/5 hover:bg-white/5 transition-colors"
               >
+                <td className="p-3">{stock.symbol}</td>
                 <td className="py-2 px-4">
                   <div className="flex flex-col">
                     <span className="font-medium">{stock.name}</span>
-                    <span className="text-sm text-gray-400">{stock.symbol}</span>
                   </div>
                 </td>
                 <td className="py-2 px-4 text-right">
@@ -63,6 +64,7 @@ export default function PortfolioStocks() {
             ))}
           </tbody>
         </table>
+        {stocks.length === 0 && <p className="my-20 text-center opacity-60">No Stocks found!</p>}
       </div>
     </div>
   );

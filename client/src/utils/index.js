@@ -20,27 +20,23 @@ export const getRealTimePrices = async (stocks) => {
 };
 
 export const portfolioMetrics = async (stocks) => {
-  const stocksWithRealTimePrices = await getRealTimePrices(stocks);
+  const stocksWithRealTimePrices = await getRealTimePrices(stocks) || [];
 
-  const dbStocks = stocks.map((stock) => {
-    return {
-      symbol: stock.symbol,
-      price: stock.purchasePrice,
-    }
-  });
+  const totalInvestedValue = stocks.reduce((prev, current) =>
+    prev + (Number(current.purchasePrice) * Number(current.quantity)), 0);
 
+  const totalCurrentValue = stocks.reduce((prev, current) => {
+    const currentPrice = stocksWithRealTimePrices.find(
+      stock => stock.symbol === current.symbol
+    )?.price || current.purchasePrice;
 
-  // Get total value of all stocks
-  const totalInvestedValue = dbStocks.reduce((prev, current) => prev + Number(current.price), 0);
-
-  // Get total value of all stocks
-  const totalCurrentValue = stocksWithRealTimePrices.reduce((prev, current) => prev + Number(current.price), 0);
-
+    return prev + (Number(currentPrice) * Number(current.quantity));
+  }, 0);
   // Get p&l value
   const totalPL = totalCurrentValue - totalInvestedValue;
 
   // Get p&l percentage
-  const totalPLPercentage = ((totalPL / totalInvestedValue) * 100).toFixed(2);
+  const totalPLPercentage = ((totalPL / totalInvestedValue) * 100) || 0;
 
   return {
     totalInvestedValue,
@@ -67,7 +63,7 @@ export const getTopPerformingStocks = async (stocks) => {
     const sortedStocks = realTimeStockData.sort((a, b) => b.price - a.price);
     return sortedStocks;
   } catch (error) {
-    console.error(error.message);
+    console.error(error);
   }
 
 
