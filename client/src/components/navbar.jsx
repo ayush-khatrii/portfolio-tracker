@@ -2,7 +2,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { MdShowChart, MdMenu } from "react-icons/md";
 import { useState } from "react";
 
-export default function Navbar() {
+const Navbar = () => {
   const location = useLocation();
   const url = location.pathname;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -64,3 +64,5 @@ export default function Navbar() {
     </header>
   );
 }
+
+export default Navbar;
