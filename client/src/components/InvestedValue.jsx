@@ -2,6 +2,8 @@ import { CiWallet } from "react-icons/ci";
 
 export default function InvestedValue({ value, loading }) {
   const isInvestedValuePresent = value.totalInvestedValue > 0;
+  const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+
   return (
     <div className="w-full border  border-zinc-500/15 cursor-pointer rounded hover:shadow-lg transition-shadow">
       <div className="p-6">
@@ -19,7 +21,7 @@ export default function InvestedValue({ value, loading }) {
           ) : (
             <span className="text-2xl flex gap-3 items-center font-bold">
               {isInvestedValuePresent ? (
-                `$${value.totalInvestedValue?.toFixed(2)}`
+                `${formatter.format(value.totalInvestedValue?.toFixed(2))}`
               ) : (
                 <p className="text-sm my-2 font-normal opacity-50">
                   Add stocks to see Total Invested Value

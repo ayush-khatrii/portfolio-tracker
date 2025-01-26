@@ -21,7 +21,6 @@ export default function EditHolding() {
       try {
         const res = await fetch(`${url}/api/holding/${params.id}`);
         const data = await res.json();
-        console.log(data)
         setHolding({
           name: data.data.name,
           symbol: data.data.symbol,

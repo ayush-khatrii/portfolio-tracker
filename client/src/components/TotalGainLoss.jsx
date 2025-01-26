@@ -1,6 +1,8 @@
 import { IoTrendingDown, IoTrendingUp } from "react-icons/io5";
 
 export default function TotalGainLoss({ value }) {
+  const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+
   return (
     <div className="w-full border border-zinc-500/15 cursor-pointer rounded hover:shadow-lg transition-shadow">
       <div className="p-5">
@@ -15,10 +17,10 @@ export default function TotalGainLoss({ value }) {
         <div className="pt-2 font-bold">
           <span className={`flex justify-start items-center gap-3 text-2xl font-bold ${value.totalPL < 1 ? "text-red-500 " : "text-green-500 "}`}>
             <div>
-              {`$${value.totalPL?.toFixed(2)}`}
+              {`${formatter.format(value?.totalPL)}`}
             </div>
             <div className="text-sm font-normal">
-              {`(${value.totalPLPercentage?.toFixed(2)}%)`}
+              {`(${value.totalPLPercentage}%)`}
             </div>
           </span>
         </div>

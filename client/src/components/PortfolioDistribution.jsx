@@ -46,7 +46,7 @@ export default function PortfolioDistribution() {
         <CiTrophy className=" h-5 w-5" />
       </div>
       <div className="h-[300px] md:h-[300px] w-full">
-        {stockSector.length === 0 && <p className="mx-6 my-2 opacity-60">No stocks found in the portfolio!</p>}
+        {stockSector && stockSector.length === 0 && <p className="mx-6 my-2 opacity-60">No stocks found in the portfolio!</p>}
         <ResponsiveContainer width="100%" height="100%">
           <PieChart width={500} height={500}>
             <Pie

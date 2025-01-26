@@ -1,3 +1,5 @@
+import toast from "react-hot-toast";
+
 const apikey = import.meta.env.VITE_REACT_APP_API_KEY;
 
 export const getRealTimePrices = async (stocks) => {
@@ -36,7 +38,7 @@ export const portfolioMetrics = async (stocks) => {
   const totalPL = totalCurrentValue - totalInvestedValue;
 
   // Get p&l percentage
-  const totalPLPercentage = ((totalPL / totalInvestedValue) * 100) || 0;
+  const totalPLPercentage = ((totalPL / totalInvestedValue) * 100).toFixed(2);
 
   return {
     totalInvestedValue,
@@ -51,7 +53,11 @@ export const getTopPerformingStocks = async (stocks) => {
   try {
     const resp = await fetch(`https://financialmodelingprep.com/api/v3/quote/${symbols}?apikey=${apikey}`);
     if (!resp.ok) {
-      throw new Error("Failed to fetch real-time prices");
+      if (resp.status === 429) {
+        throw new Error("API rate limit exceeded. Please try again later.");
+      } else {
+        throw new Error("Failed to fetch data.");
+      }
     }
     const allPortfolioStocks = await resp.json();
 
@@ -63,6 +69,7 @@ export const getTopPerformingStocks = async (stocks) => {
     const sortedStocks = realTimeStockData.sort((a, b) => b.price - a.price);
     return sortedStocks;
   } catch (error) {
+    toast.error(error.message);
     console.error(error);
   }
 
@@ -73,10 +80,17 @@ export const fetchSector = async (stocks) => {
   try {
     const symbols = stocks.map((stock) => stock.symbol).join(",");
     const res = await fetch(`https://financialmodelingprep.com/api/v3/profile/${symbols}?apikey=${apikey}`);
-
+    if (!res.ok) {
+      const errorResponse = await res.json();
+      if (res.status === 429) {
+        throw new Error(errorResponse.message);
+      } else {
+        throw new Error(errorResponse.message);
+      }
+    }
     const data = await res.json();
 
-    const stocksWithSector = data.map(stock => ({
+    const stocksWithSector = data?.map(stock => ({
       symbol: stock.symbol,
       sector: stock.sector
     }));

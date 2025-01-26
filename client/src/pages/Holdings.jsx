@@ -23,12 +23,13 @@ export default function Holdings() {
         method: 'DELETE',
       });
       if (!resp.ok) {
-        const errorResponse = await resp.json();
-        const errorMessage = errorResponse.message || "Failed to delete holding. Please try again.";
-        throw new Error(errorMessage);
+        if (resp.status === 429) {
+          throw new Error("API rate limit exceeded. Please try again later.");
+        } else {
+          throw new Error("Failed to fetch data.");
+        }
       }
       toast.success("Holding deleted successfully!");
-      await holdings();
 
       queryClient.setQueryData(['holdings'], (oldData) =>
         oldData ? oldData.filter((holding) => holding.id !== id) : []
@@ -37,25 +38,33 @@ export default function Holdings() {
     } catch (error) {
       toast.error(error.message);
       console.log(error.message);
+      return [];
     }
   }
 
   const getRealTimePrices = async (stocks) => {
     const symbols = stocks.map((stock) => stock.symbol).join(",");
-    const resp = await fetch(`https://financialmodelingprep.com/api/v3/quote-short/${symbols}?apikey=${apikey}`);
+    try {
+      const resp = await fetch(`https://financialmodelingprep.com/api/v3/quote-short/${symbols}?apikey=${apikey}`);
 
-    if (!resp.ok) {
-      const errorResponse = await resp.json();
-      throw new Error(errorResponse.message);
+      if (!resp.ok) {
+        if (resp.status === 429) {
+          throw new Error("API rate limit exceeded. Please try again later.");
+        } else {
+          throw new Error("Failed to fetch data.");
+        }
+      }
+      const allPrices = await resp.json();
+      return allPrices.map((stock) => ({
+        symbol: stock.symbol,
+        price: stock.price,
+      }));
+    } catch (error) {
+      console.error(error);
+      return [];
     }
-    const allPrices = await resp.json();
-    const data = allPrices.map(stock => ({
-      symbol: stock.symbol,
-      price: stock.price
-    }));
-
-    return data;
   };
+
 
   const { data: holdingsData, isLoading, error } = useQuery({
     queryKey: ['holdings'],
@@ -78,13 +87,19 @@ export default function Holdings() {
 
   const combinedData = holdingsData?.map((holding) => {
     const currentStock = realTimeStockPrice?.find((stock) => stock.symbol === holding.symbol);
-    const currentPrice = currentStock?.price ?? holding.purchasePrice;
+    const currentPrice = currentStock?.price || 0;
+    const quantity = Number(holding.quantity) || 0;
+    const currentTotalValue = currentPrice * quantity || 0;
     return {
       ...holding,
-      currentPrice,
-      currentTotalValue: Number(currentPrice) * Number(holding.quantity)
-    }
-  });
+      currentPrice: Number(currentPrice),
+      currentTotalValue: Number(currentTotalValue),
+    };
+  }) || [];
+
+
+
+  console.log(combinedData);
 
 
 
@@ -102,7 +117,7 @@ export default function Holdings() {
           <IoIosArrowRoundBack /> back
         </button>
       </Link>
-      <section className="w-full md:px-3">
+      <div className="w-full md:px-3">
         <div className="flex justify-between px-5 my-5 items-center w-full">
           <h1 className="md:text-xl text-base font-bold">All Your Holdings</h1>
           <Link to="/add/holding" className="flex items-center">
@@ -142,10 +157,22 @@ export default function Holdings() {
                             </div>
                           </div>
                         </td> :
-                        <td className="py-2 text-sm px-4">${holding.currentPrice.toFixed(2)}</td>
+                        <td className="py-2 text-sm px-4">${holding ? holding.currentPrice.toFixed(2) : null}</td>
                     }
                     <td className="py-2 text-sm px-4">
-                      ${holding.currentTotalValue?.toFixed(2)}
+                      {
+                        isLoading ?
+                          <td className="py-2 text-sm px-4">
+                            <div className="animate-pulse flex space-x-4">
+                              <div className="flex space-y-4 py-1">
+                                <div className="h-4 bg-gray-500 rounded w-20"></div>
+                              </div>
+                            </div>
+                          </td> :
+                          <td className="py-2 text-sm px-4">
+                            ${holding.currentTotalValue?.toFixed(2)}
+                          </td>
+                      }
                     </td>
                     <td className="py-2 flex text-sm px-4">
                       <Link to={`/edit/holding/${holding.id}`}>
@@ -167,7 +194,7 @@ export default function Holdings() {
             <p className=" text-center my-10">No holdings found!</p>
           }
         </div>
-      </section>
-    </section>
+      </div>
+    </section >
   )
 }
