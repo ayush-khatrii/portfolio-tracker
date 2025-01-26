@@ -97,7 +97,7 @@ export default function Holdings() {
   }
 
   return (
-    <>
+    <section>
       <Navbar />
       <section className="w-full md:px-3">
         <div className="flex justify-between px-5 my-5 items-center w-full">
@@ -165,6 +165,6 @@ export default function Holdings() {
           }
         </div>
       </section>
-    </>
+    </section>
   )
 }
