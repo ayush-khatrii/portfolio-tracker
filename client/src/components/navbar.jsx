@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { MdAdd, MdPlusOne, MdShowChart, MdMenu } from "react-icons/md";
+import { MdShowChart, MdMenu } from "react-icons/md";
 import { useState } from "react";
 
 export default function Navbar() {

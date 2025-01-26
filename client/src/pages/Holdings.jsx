@@ -1,6 +1,5 @@
 import { MdAdd } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import Navbar from "../components/Navbar";
