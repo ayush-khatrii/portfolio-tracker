@@ -19,7 +19,7 @@ export default function InvestedValue({ value, loading }) {
           ) : (
             <span className="text-2xl flex gap-3 items-center font-bold">
               {isInvestedValuePresent ? (
-                `$${value.totalInvestedValue.toFixed(2)}`
+                `$${value.totalInvestedValue?.toFixed(2)}`
               ) : (
                 <p className="text-sm my-2 font-normal opacity-50">
                   Add stocks to see Total Invested Value

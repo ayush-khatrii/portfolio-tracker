@@ -145,7 +145,7 @@ export default function Holdings() {
                         <td className="py-2 text-sm px-4">${holding.currentPrice.toFixed(2)}</td>
                     }
                     <td className="py-2 text-sm px-4">
-                      ${holding.currentTotalValue.toFixed(2)}
+                      ${holding.currentTotalValue?.toFixed(2)}
                     </td>
                     <td className="py-2 flex text-sm px-4">
                       <Link to={`/edit/holding/${holding.id}`}>

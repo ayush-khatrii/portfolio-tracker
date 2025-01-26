@@ -20,7 +20,7 @@ export default function CurrentValue({ value, loading }) {
           ) : (
             <span className="text-2xl flex gap-3 items-center font-bold">
               {isStocksPresent ? (
-                `$${value.totalCurrentValue.toFixed(2)}`
+                `$${value.totalCurrentValue?.toFixed(2)}`
               ) : (
                 <p className="text-sm my-2 font-normal opacity-50">
                   Add stocks to see Current Value
