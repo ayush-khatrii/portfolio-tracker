@@ -44,8 +44,8 @@ const addHolding = async (req, res) => {
       data: {
         name: name,
         symbol: ticker,
-        purchasePrice: price,
-        quantity: quantity,
+        purchasePrice: Number(price),
+        quantity: Number(quantity),
       }
     });
 
@@ -53,7 +53,7 @@ const addHolding = async (req, res) => {
     res.status(201).json({ message: "Successfully added!", data: newHolding });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'An error occurred while adding the stock.' });
+    return res.status(500).json({ message: error.message });
   }
 };
 
