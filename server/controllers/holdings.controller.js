@@ -7,7 +7,7 @@ const getAllHoldings = async (req, res) => {
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "An error occurred" });
+    res.status(500).json({ message: error.message });
   }
 }
 
@@ -22,7 +22,7 @@ const getHoldingById = async (req, res) => {
     res.status(200).json({ message: "Successfully fetched!", data: holding });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "An error occurred" });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -108,7 +108,6 @@ const updateHolding = async (req, res) => {
 };
 
 const deleteHolding = async (req, res) => {
-  console.log("inside delete controller");
   try {
     const { id } = req.params;
     await prisma.stock.delete({
