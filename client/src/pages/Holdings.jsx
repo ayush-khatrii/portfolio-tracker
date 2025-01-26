@@ -2,7 +2,7 @@ import { MdAdd } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import Navbar from "../components/Navbar";
+import { IoIosArrowRoundBack } from "react-icons/io";
 
 const backendUrl = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 const apikey = import.meta.env.VITE_REACT_APP_API_KEY;
@@ -97,7 +97,11 @@ export default function Holdings() {
 
   return (
     <section>
-      <Navbar />
+      <Link to={"/"}>
+        <button className='relative top-3 md:left-4 hover:underline flex items-center gap-2 hover:border hover:border-zinc-900 px-3 py-2 rounded-md'>
+          <IoIosArrowRoundBack /> back
+        </button>
+      </Link>
       <section className="w-full md:px-3">
         <div className="flex justify-between px-5 my-5 items-center w-full">
           <h1 className="md:text-xl text-base font-bold">All Your Holdings</h1>
