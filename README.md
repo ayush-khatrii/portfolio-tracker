@@ -60,5 +60,5 @@ npm run dev
 - GET ` /api/holding/all` - Get all holdings
 - GET ` /api/holding/:id` - Get holding by id
 - POST `/api/holding/create` - Add holding
-- PUT `/api/holding/:id` - Update holding
-- DELETE `/api/holding/:id` - Remove holding
+- PUT `/api/holding/:id/update` - Update holding
+- DELETE `/api/holding/:id/delete` - Remove holding
