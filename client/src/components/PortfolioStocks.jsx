@@ -58,7 +58,7 @@ export default function PortfolioStocks() {
                   <span className="text-zinc-300">{stock.quantity}</span>
                 </td>
                 <td className="py-2 px-4 text-right">
-                  <span className="font-medium">₹   {stock.purchasePrice}</span>
+                  <span className="font-medium">$   {stock.purchasePrice}</span>
                 </td>
               </tr>
             ))}

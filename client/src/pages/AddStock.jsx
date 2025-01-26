@@ -47,8 +47,8 @@ export default function AddStock() {
         body: JSON.stringify({
           name: holding.name,
           ticker: share.symbol,
-          price: holding.price,
-          quantity: holding.quantity,
+          price: Number(holding.price),
+          quantity: Number(holding.quantity),
         })
       });
       const data = await res.json();
