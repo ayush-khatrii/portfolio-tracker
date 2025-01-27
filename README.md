@@ -3,7 +3,7 @@
 A simple full-stack web application for tracking investment portfolios.
 
 
-[Live Link](https://portfolio-tracker-beta.vercel.app)
+Click here to see [Live Link](https://portfolio-tracker-beta.vercel.app)
 
 ## Core Features
 
