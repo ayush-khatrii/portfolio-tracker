@@ -2,6 +2,9 @@
 
 A simple full-stack web application for tracking investment portfolios.
 
+
+Click here to see [Live Link](https://portfolio-tracker-beta.vercel.app)
+
 ## Core Features
 
 - 📊 Real-time portfolio dashboard
@@ -23,7 +26,7 @@ A simple full-stack web application for tracking investment portfolios.
 - Express.js
 - PostgreSQL
 - Prisma ORM
-- 
+  
 ## Deployment
 - AWS EC2 – Deployed the backend application on an AWS EC2 instance for scalability and performance.
 - Nginx – Configured as a reverse proxy to handle HTTPS traffic and route requests between the frontend and backend.
